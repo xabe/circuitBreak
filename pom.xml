@@ -287,7 +287,7 @@
             <activation>
                 <os>
                     <family>unix</family>
-                    <name>Linux</name>
+                    <name>linux</name>
                 </os>
             </activation>
             <build>
