@@ -1,6 +1,8 @@
 language: java
 sudo: false
 jdk: oraclejdk9
+install: true
+
 services:
   - docker
 before_install:
@@ -8,15 +10,13 @@ before_install:
   - docker info
 addons:
   sonarcloud:
-    organization: "xabe-github"
+    organization: "sonarcloud"
     token: "t4A2gTEMjLLFbNCf1yRPNKa0jQELsO2AxM9D5lruyoKHtC6u7cqywNPnD4inZvenlkZEcGli25//oxEOp3+Y2+O0UY6VVrvh8QHZFKXRzEbdXa9A9uQ8ClrEQ4MfuMwiMgqCiExvcpOvknx2w7KfEXjUyRs4maX7+aW+FM/DfEJNYkkhwlsQT2Q9905Ko5ho9OVyWH6dv3mAu1cS+ddMnd8GjJjfjKFctxEp3/slhQLAUGnH0/zMcsPgk/l3JitDbkZWuC8apO76jC4DguJP0TXWb9NPLzrp8XlvPcppvB0NWQWpTEjv/6dclNsyKbCVVmVZGkDRzrLpm8ni0BktHtPbefADHjKNyd8mS4YC3Fv3TPMRV+v7/gGH6SE2FNtrXygRVBNzW17N/WkTY+UlC6seJ5t70ktAjAAkdSzYmaFkAgkL4ozHWNKl8/C9A2FVpPbC2DrThe9NVmBCqIPgAZbf50BTdtWZFklHEdfEIiGXhtwH7ixD7l6xyZAC4Dya9TixYFDttMBj7N6cfFoT0buScfpM+qNIssaV/8Qhw7bl0ZtM0aMDsvGXYZhnac9YcmZmXzL9WrUGtKLepPnRlHwqPv1KlbJ3SYLM0aRhfB3G3A2tfcUhvoiMlBSMNdA7e8SIW/jHwZh6cU2xi4yk3s+6CZ3IsASNFv3Ze/Iy7kc="
 secure:
 cache:
   directories:
   - '$HOME/.m2/repository'
   - '$HOME/.sonar/cache'
-install:
-  - mvn clean test-compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
   - mvn verify sonar:sonar
 after_success:
