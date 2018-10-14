@@ -486,7 +486,7 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
-                    <repoToken>wA0pSRLvSdH1BnLJZ2DLKVFqp0kYbF0eo</repoToken>
+                    <repoToken>FkrveSTlfHp7HJ9c5qFyhDcAEWk34fby5</repoToken>
                     <jacocoReports>
                         <jacocoReport>${project.reporting.outputDirectory}/jacoco-merge/jacoco.xml</jacocoReport>
                         <jacocoReport>${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml</jacocoReport>
