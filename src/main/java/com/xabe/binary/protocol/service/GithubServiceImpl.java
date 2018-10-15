@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GithubServiceImpl implements GithubService {
 
@@ -28,13 +30,14 @@ public class GithubServiceImpl implements GithubService {
 
 
     @Override
-    public GithubUser getUser(String user) {
+    public Optional<GithubUser> getUser(String user) {
         try{
         final ClientRequestInfo clientRequestInfo = ClientRequestBuilder.builder().withUrl(url).withClass(GithubUser.class).withResultType(ResultTypeImpl.ONE).withMediaType(MediaType.APPLICATION_JSON_VALUE).withUriParams(new String[]{user}).build();
-        return restConnector.getSimpleObject(clientRequestInfo);}
+        return restConnector.getSimpleObject(clientRequestInfo);
+        }
         catch (Exception e){
             LOGGER.error("Error get user {}",e.getMessage());
-            return new GithubUser("CB","CB","CB");
+            return Optional.of(new GithubUser("CB","CB","CB"));
         }
     }
 }

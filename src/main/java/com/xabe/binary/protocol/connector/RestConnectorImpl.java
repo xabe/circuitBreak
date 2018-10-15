@@ -14,6 +14,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Component
@@ -35,8 +36,8 @@ public class RestConnectorImpl implements RestConnector {
     }
 
     @Override
-    public <T> T getSimpleObject(ClientRequestInfo clientRequestInfo) {
-        return circuitBreaker.callWithCircuitBreaker(this.call(clientRequestInfo));
+    public <T> Optional<T> getSimpleObject(ClientRequestInfo clientRequestInfo) {
+        return Optional.ofNullable(circuitBreaker.callWithCircuitBreaker(this.call(clientRequestInfo)));
     }
 
     private <T> Supplier<T> call(ClientRequestInfo clientRequestInfo) {

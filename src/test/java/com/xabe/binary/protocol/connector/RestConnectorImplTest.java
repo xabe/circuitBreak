@@ -1,18 +1,15 @@
 package com.xabe.binary.protocol.connector;
 
-import akka.pattern.CircuitBreaker;
 import com.xabe.binary.protocol.circuitbreak.WrapperCircuitBreaker;
 import com.xabe.binary.protocol.model.GithubUser;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -41,7 +38,7 @@ public class RestConnectorImplTest {
         when(client.target(anyString())).thenReturn(webTarget);
 
         //When
-        GithubUser result = restConnector.getSimpleObject(clientRequestInfo);
+        Optional<Object> result = restConnector.getSimpleObject(clientRequestInfo);
 
         //Then
         assertThat(result, is(notNullValue()));
