@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import scala.concurrent.duration.FiniteDuration;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class CircuitBreakAkka implements WrapperCircuitBreaker {

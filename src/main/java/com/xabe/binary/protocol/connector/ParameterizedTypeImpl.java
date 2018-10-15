@@ -7,8 +7,8 @@ import java.lang.reflect.Type;
 @SuppressWarnings("serial")
 public class ParameterizedTypeImpl implements ParameterizedType, Serializable {
 
-	private final Type rawType;
-	private final Type actualTypeArguments[];
+	private final transient Type rawType;
+	private final transient Type[] actualTypeArguments;
 	
 	public ParameterizedTypeImpl(Type rawType, Type... actualTypeArguments) {
 		this.rawType = rawType;
