@@ -2,7 +2,9 @@ package com.xabe.binary.protocol.service;
 
 import com.xabe.binary.protocol.model.GithubUser;
 
+import java.util.Optional;
+
 public interface GithubService {
 
-    GithubUser getUser(String user);
+    Optional<GithubUser> getUser(String user);
 }

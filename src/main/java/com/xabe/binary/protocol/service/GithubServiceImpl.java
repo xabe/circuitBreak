@@ -27,8 +27,7 @@ public class GithubServiceImpl implements GithubService {
         this.url = url;
         LOGGER.info("The actual url {}",url);
     }
-
-
+    
     @Override
     public Optional<GithubUser> getUser(String user) {
         try{
