@@ -3,6 +3,7 @@ package com.xabe.binary.protocol.connector;
 
 import com.xabe.binary.protocol.circuitbreak.WrapperCircuitBreaker;
 import com.xabe.binary.protocol.config.jackson.ObjectMapperContextResolver;
+import com.xabe.binary.protocol.connector.builder.ClientRequestInfo;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;

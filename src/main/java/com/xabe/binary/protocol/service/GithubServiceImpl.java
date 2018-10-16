@@ -1,9 +1,9 @@
 package com.xabe.binary.protocol.service;
 
-import com.xabe.binary.protocol.connector.ClientRequestBuilder;
-import com.xabe.binary.protocol.connector.ClientRequestInfo;
+import com.xabe.binary.protocol.connector.builder.ClientRequestBuilder;
+import com.xabe.binary.protocol.connector.builder.ClientRequestInfo;
 import com.xabe.binary.protocol.connector.RestConnector;
-import com.xabe.binary.protocol.connector.ResultTypeImpl;
+import com.xabe.binary.protocol.connector.builder.ResultTypeImpl;
 import com.xabe.binary.protocol.model.GithubUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

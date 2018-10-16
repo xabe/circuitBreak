@@ -1,14 +1,12 @@
-package com.xabe.binary.protocol.connector;
+package com.xabe.binary.protocol.connector.builder;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-@SuppressWarnings("serial")
-public class ParameterizedTypeImpl implements ParameterizedType, Serializable {
+public class ParameterizedTypeImpl implements ParameterizedType {
 
-	private final transient Type rawType;
-	private final transient Type[] actualTypeArguments;
+	private final Type rawType;
+	private final Type[] actualTypeArguments;
 	
 	public ParameterizedTypeImpl(Type rawType, Type... actualTypeArguments) {
 		this.rawType = rawType;

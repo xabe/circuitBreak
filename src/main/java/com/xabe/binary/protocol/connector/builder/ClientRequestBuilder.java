@@ -1,4 +1,4 @@
-package com.xabe.binary.protocol.connector;
+package com.xabe.binary.protocol.connector.builder;
 
 import java.util.Objects;
 

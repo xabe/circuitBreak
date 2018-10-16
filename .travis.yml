@@ -20,5 +20,4 @@ cache:
   - '$HOME/.sonar/cache'
 script:
   - mvn verify sonar:sonar
-after_success:
-  - mvn coveralls:report -q
+
