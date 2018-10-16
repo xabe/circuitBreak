@@ -17,6 +17,13 @@
         <jacoco.version>0.8.1</jacoco.version>
         <jacoco.line.coveredRatio>0.85</jacoco.line.coveredRatio>
         <jacoco.branch.coveredRatio>0.85</jacoco.branch.coveredRatio>
+        <!--Sonar -->
+        <sonar.jacoco.reportPath>${project.build.directory}/coverage-reports/jacoco-merge.exec</sonar.jacoco.reportPath>
+        <sonar.jacoco.itReportPath>${project.build.directory}/coverage-reports/jacoco-merge.exec</sonar.jacoco.itReportPath>
+        <sonar.language>java</sonar.language>
+        <sonar.jacoco.reportMissing.force.zero>true</sonar.jacoco.reportMissing.force.zero>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.exclusions>**/*Config.java</sonar.exclusions>
         <jersey.version>2.25</jersey.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>2.7</log4j.version>

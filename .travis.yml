@@ -19,6 +19,6 @@ cache:
   - '$HOME/.m2/repository'
   - '$HOME/.sonar/cache'
 script:
-  - mvn verify sonar:sonar -Dsonar.jacoco.reportPath=target/coverage-reports/jacoco-merge.exec -Dsonar.exclusions="**/*Config.java"
+  - mvn verify sonar:sonar
 after_success:
   - mvn coveralls:report -q
