@@ -15,7 +15,7 @@ public class ClientRequestBuilderTest {
         final ClientRequestInfo clientRequestInfo = ClientRequestBuilder.builder().withClass(String.class).withMediaType(MediaType.APPLICATION_JSON).withResultType(ResultTypeImpl.ONE).withUrl("url").withUriParams(new String[]{"param"}).build();
         assertThat(clientRequestInfo, is(notNullValue()));
         assertThat(clientRequestInfo.getUrl(), is("url"));
-        assertThat(clientRequestInfo.getMediaType(), is(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(clientRequestInfo.getMediaType(), is(MediaType.APPLICATION_JSON));
         assertThat(clientRequestInfo.getType(), is(notNullValue()));
         assertThat(clientRequestInfo.getUriParams(), is(notNullValue()));
         assertThat(clientRequestInfo.isUriParams(), is(true));
