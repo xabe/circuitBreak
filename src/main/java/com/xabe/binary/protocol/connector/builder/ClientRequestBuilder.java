@@ -1,5 +1,7 @@
 package com.xabe.binary.protocol.connector.builder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ClientRequestBuilder {
@@ -8,7 +10,7 @@ public class ClientRequestBuilder {
 	private ResultTypeImpl resultType;
 	private String mediaType;
 	private Class<?> clazz;
-	private String[] uriParams;
+	private List<String> uriParams = new ArrayList<>();
 
 	private ClientRequestBuilder() {
 	}
@@ -37,8 +39,8 @@ public class ClientRequestBuilder {
 		return this;
 	}
 	
-	public ClientRequestBuilder withUriParams(String[] uriParams) {
-		this.uriParams = uriParams;
+	public ClientRequestBuilder withUriParams(String uriParams) {
+		this.uriParams.add(uriParams);
 		return this;
 	}
 

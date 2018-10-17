@@ -31,7 +31,7 @@ public class GithubServiceImpl implements GithubService {
     @Override
     public Optional<GithubUser> getUser(String user) {
         try{
-        final ClientRequestInfo clientRequestInfo = ClientRequestBuilder.builder().withUrl(url).withClass(GithubUser.class).withResultType(ResultTypeImpl.ONE).withMediaType(MediaType.APPLICATION_JSON_VALUE).withUriParams(new String[]{user}).build();
+        final ClientRequestInfo clientRequestInfo = ClientRequestBuilder.builder().withUrl(url).withClass(GithubUser.class).withResultType(ResultTypeImpl.ONE).withMediaType(MediaType.APPLICATION_JSON_VALUE).withUriParams(user).build();
         return restConnector.getSimpleObject(clientRequestInfo);
         }
         catch (Exception e){

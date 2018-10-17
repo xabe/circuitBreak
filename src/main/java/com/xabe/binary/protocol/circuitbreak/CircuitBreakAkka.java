@@ -11,7 +11,10 @@ import java.util.function.Supplier;
 
 public class CircuitBreakAkka implements WrapperCircuitBreaker {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CircuitBreakAkka.class);
+    public static final String CLOSE_CIRCUIT_BREAK = "-----> CLOSE CIRCUIT BREAK";
+    public static final String HALF_OPEN_CIRCUIT_BREAK = "-----> HALF OPEN CIRCUIT BREAK";
+    public static final String OPEN_CIRCUIT_BREAK = "-----> OPEN CIRCUIT BREAK";
+    private static Logger LOGGER = LoggerFactory.getLogger(CircuitBreakAkka.class);
     private final CircuitBreaker circuitBreaker;
 
     public CircuitBreakAkka(ActorSystem actorSystem) {
@@ -20,22 +23,22 @@ public class CircuitBreakAkka implements WrapperCircuitBreaker {
                 actorSystem.scheduler(),
                 1,
                 FiniteDuration.create(1, TimeUnit.SECONDS),
-                FiniteDuration.create(10, TimeUnit.SECONDS))
+                FiniteDuration.create(5, TimeUnit.SECONDS))
                 .onOpen(this::open)
                 .onHalfOpen(this::halfOpen)
                 .onClose(this::close);
     }
 
-    private void close() {
-        LOGGER.info("-----> CLOSE CIRCUIT BREAK");
+    void close() {
+        LOGGER.info(CLOSE_CIRCUIT_BREAK);
     }
 
-    private void halfOpen() {
-        LOGGER.info("-----> HALF OPEN CIRCUIT BREAK");
+    void halfOpen() {
+        LOGGER.info(HALF_OPEN_CIRCUIT_BREAK);
     }
 
-    private void open() {
-        LOGGER.info("-----> OPEN CIRCUIT BREAK");
+    void open() {
+        LOGGER.info(OPEN_CIRCUIT_BREAK);
     }
 
     @Override

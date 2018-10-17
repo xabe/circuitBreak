@@ -1,17 +1,19 @@
 package com.xabe.binary.protocol.connector.builder;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.web.util.UriTemplate;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 public class ClientRequestInfo {
 
 	private final String url;
 	private final ParameterizedType type;
 	private final String mediaType;
-	private String[] uriParams;
+	private List<String> uriParams;
 
-	public ClientRequestInfo(String url, ParameterizedType createType, String mediaType, String[] uriParams) {
+	public ClientRequestInfo(String url, ParameterizedType createType, String mediaType, List<String> uriParams) {
 		this.url = url;
 		this.type = createType;
 		this.mediaType = mediaType;
@@ -27,7 +29,7 @@ public class ClientRequestInfo {
 
 	private String resolveUrl() {
 		final UriTemplate uriTemplate = new UriTemplate(this.url);
-		return uriTemplate.expand(this.getUriParams()).toString();
+		return uriTemplate.expand(this.getUriParams().toArray()).toString();
 	}
 
 	public ParameterizedType getType() {
@@ -38,12 +40,12 @@ public class ClientRequestInfo {
 		return mediaType;
 	}
 	
-	public String[] getUriParams() {
+	public List<String> getUriParams() {
 		return uriParams;
 	}
 	
 	public boolean isUriParams(){
-		return this.uriParams != null && uriParams.length > 0;
+		return CollectionUtils.isNotEmpty(this.uriParams);
 	}
 
 }
