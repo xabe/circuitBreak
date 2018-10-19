@@ -3,28 +3,34 @@ package com.xabe.binary.protocol.circuitbreak;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.Properties;
 import java.util.function.Supplier;
 
 public class CircuitBreakResilience implements WrapperCircuitBreaker {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CircuitBreakResilience.class);
+    public static final String ATTEMPTS = "attempts";
+    public static final String SLICE = "slice";
+    public static final String DEFAULT_VALUE = "1";
+    public static final String DEFAULT_VALUE_ATTEMPTS = DEFAULT_VALUE;
+    public static final String DEFAULT_VALUE_SLICE = "5";
+    private static Logger logger = LoggerFactory.getLogger(CircuitBreakResilience.class);
     private final CircuitBreaker circuitBreaker;
 
-    public CircuitBreakResilience() {
+    public CircuitBreakResilience(Properties properties) {
         final CircuitBreakerConfig config = CircuitBreakerConfig.custom()
-                .failureRateThreshold(1l)
-                .ringBufferSizeInHalfOpenState(1)
-                .ringBufferSizeInClosedState(1)
+                .failureRateThreshold(NumberUtils.toFloat(properties.getProperty(ATTEMPTS, DEFAULT_VALUE_ATTEMPTS)))
+                .ringBufferSizeInHalfOpenState(NumberUtils.toInt(properties.getProperty(ATTEMPTS, DEFAULT_VALUE_ATTEMPTS)))
+                .ringBufferSizeInClosedState(NumberUtils.toInt(properties.getProperty(ATTEMPTS, DEFAULT_VALUE_ATTEMPTS)))
                 .enableAutomaticTransitionFromOpenToHalfOpen()
-                .waitDurationInOpenState(Duration.ofSeconds(30l))
+                .waitDurationInOpenState(Duration.ofSeconds(NumberUtils.toLong(properties.getProperty(SLICE, DEFAULT_VALUE_SLICE))))
                 .build();
         CircuitBreakerRegistry registry = CircuitBreakerRegistry.of(config);
         this.circuitBreaker = registry.circuitBreaker("my-circuit-break");
-        circuitBreaker.getEventPublisher().onEvent(event -> LOGGER.info("{}",event));
+        circuitBreaker.getEventPublisher().onEvent(event -> logger.info(event.toString()));
     }
 
 

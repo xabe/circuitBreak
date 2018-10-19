@@ -42,4 +42,7 @@ public class App {
         return String.format("%s://%s:%d",protocol, BIND_IP, port);
     }
 
+    public static HttpServer getServer() {
+        return server;
+    }
 }

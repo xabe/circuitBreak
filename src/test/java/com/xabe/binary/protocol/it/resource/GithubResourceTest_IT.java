@@ -2,7 +2,6 @@ package com.xabe.binary.protocol.it.resource;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
-import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.xabe.binary.protocol.model.GithubUser;
 import com.xabe.binary.protocol.payload.StatusPayload;
@@ -12,7 +11,6 @@ import eu.rekawek.toxiproxy.model.ToxicDirection;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;

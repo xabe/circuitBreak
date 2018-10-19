@@ -7,9 +7,15 @@ import com.xabe.binary.protocol.circuitbreak.CircuitBreakAkka;
 import com.xabe.binary.protocol.circuitbreak.CircuitBreakResilience;
 import com.xabe.binary.protocol.circuitbreak.WrapperCircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.*;
 import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.io.IOException;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"com.xabe.binary.protocol.service","com.xabe.binary.protocol.resource","com.xabe.binary.protocol.connector"})
@@ -17,6 +23,9 @@ public class SpringConfig implements ApplicationListener<ContextClosedEvent> {
 
     @Autowired
     private ActorSystem actorSystem;
+
+    @Autowired
+    private Properties properties;
 
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
@@ -29,16 +38,21 @@ public class SpringConfig implements ApplicationListener<ContextClosedEvent> {
         return  ActorSystem.create( "actorSystem" , config);
     }
 
+    @Bean(name="myProperties")
+    public Properties getMyProperties() throws IOException {
+        return PropertiesLoaderUtils.loadProperties(new ClassPathResource("/application.properties"));
+    }
+
     @Bean
     @Profile("default")
-    public WrapperCircuitBreaker getCircuitBreakAkka(ActorSystem actorSystem){
-        return new CircuitBreakAkka(actorSystem);
+    public CircuitBreakAkka getCircuitBreakAkka(ActorSystem actorSystem, @Qualifier("myProperties") Properties properties){
+        return new CircuitBreakAkka(actorSystem,properties);
     }
 
     @Bean
     @Profile("!default")
     public WrapperCircuitBreaker getCircuitBreakResilience(){
-        return new CircuitBreakResilience();
+        return new CircuitBreakResilience(properties);
     }
 
     @Configuration
