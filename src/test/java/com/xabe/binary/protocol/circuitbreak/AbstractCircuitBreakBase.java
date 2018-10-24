@@ -1,7 +1,7 @@
 package com.xabe.binary.protocol.circuitbreak;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
@@ -17,7 +17,7 @@ public abstract class AbstractCircuitBreakBase {
     protected WrapperCircuitBreaker circuitBreakAkka;
     protected Logger logger;
 
-    @Before
+    @BeforeEach
     public void init() throws NoSuchFieldException, IllegalAccessException {
         this.circuitBreakAkka = getInstanceCircuitBreak();
         this.logger = mock(Logger.class);

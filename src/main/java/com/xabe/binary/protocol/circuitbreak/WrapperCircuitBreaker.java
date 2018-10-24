@@ -2,7 +2,8 @@ package com.xabe.binary.protocol.circuitbreak;
 
 import java.util.function.Supplier;
 
-public interface WrapperCircuitBreaker {
+@FunctionalInterface
+public interface WrapperCircuitBreaker<T> {
 
-    <T> T callWithCircuitBreaker(Supplier<T> call);
+    T callWithCircuitBreaker(Supplier<T> call);
 }

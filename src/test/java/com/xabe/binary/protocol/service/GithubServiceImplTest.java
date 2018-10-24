@@ -3,12 +3,12 @@ package com.xabe.binary.protocol.service;
 import com.xabe.binary.protocol.connector.RestConnector;
 import com.xabe.binary.protocol.model.GithubUser;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class GithubServiceImplTest {

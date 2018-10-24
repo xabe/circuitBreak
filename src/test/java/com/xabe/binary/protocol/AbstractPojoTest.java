@@ -1,20 +1,20 @@
 package com.xabe.binary.protocol;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.springframework.util.ReflectionUtils;
+import org.junit.jupiter.api.Test;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+
 
 public abstract class AbstractPojoTest<T> {
 
@@ -47,42 +47,45 @@ public abstract class AbstractPojoTest<T> {
 
     @Test
     public void equalsMethodCheckTheType() {
-        assertFalse(pojo.equals("a string"));
+        assertThat(pojo, is(not("a string")));
     }
 
     @Test
     public void equalsMethodWithNullObject() {
-        assertFalse(pojo == null);
+        assertThat(pojo, is(notNullValue()));
+
     }
 
     @Test
     public void equalsMethodWithSameObject() {
         final T samePojo = pojo;
-        assertTrue(pojo.equals(samePojo));
+        assertThat(pojo, is(samePojo));
     }
 
     @Test
-    public void shouldHaveMethodAccessors() throws IntrospectionException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
-        for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(pojo.getClass())
-                .getPropertyDescriptors()) {
-            assertNotNull(propertyDescriptor.getReadMethod().invoke(pojo));
-        }
+    public void shouldHaveMethodAccessors() throws IntrospectionException, IllegalArgumentException {
+
+        Arrays.stream(Introspector.getBeanInfo(pojo.getClass()).getPropertyDescriptors()).forEach(propertyDescriptor -> {
+            try {
+                assertThat(propertyDescriptor.getReadMethod().invoke(pojo), is(Matchers.notNullValue()));
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                new RuntimeException(e);
+            }
+        });
     }
 
     @Test
-    public void shouldHaveAllPropertiesAccesibles() {
-
-        try {
-            for (PropertyDescriptor property : Introspector.getBeanInfo(pojo.getClass()).getPropertyDescriptors()) {
-                Field field = ReflectionUtils.findField(pojo.getClass(), property.getName());
+    public void shouldHaveAllPropertiesAccesibles() throws IntrospectionException, IllegalArgumentException {
+        Arrays.stream(Introspector.getBeanInfo(pojo.getClass()).getPropertyDescriptors()).forEach(propertyDescriptor -> {
+            try {
+                Field field = FieldUtils.getField(pojo.getClass(), propertyDescriptor.getName());
                 if (field != null) {
                     field.setAccessible(true);
-                    assertThat(property.getReadMethod().invoke(pojo), Matchers.is(field.get(pojo)));
+                    assertThat(propertyDescriptor.getReadMethod().invoke(pojo), Matchers.is(field.get(pojo)));
                 }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                new RuntimeException(e);
             }
-        } catch (Exception e) {
-            fail();
-        }
+        });
     }
 }

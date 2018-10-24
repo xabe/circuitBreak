@@ -2,8 +2,8 @@ package com.xabe.binary.protocol.circuitbreak;
 
 import akka.actor.ActorSystem;
 import akka.testkit.TestKit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import scala.concurrent.duration.Duration;
 
 import java.util.Properties;
@@ -13,15 +13,15 @@ public class CircuitBreakAkkaTest extends AbstractCircuitBreakBase {
     private static ActorSystem actorSystem = null;
 
 
-    @BeforeClass
+    @BeforeAll
     public static void start() {
         actorSystem = ActorSystem.create( "test" );
     }
     
 
 
-    @AfterClass
-    public static void stopCassandraEmbedded() {
+    @AfterAll
+    public static void stop() {
         TestKit.shutdownActorSystem(actorSystem, Duration.create("5 seconds"), true);
     }
 

@@ -8,9 +8,9 @@ import com.xabe.binary.protocol.payload.StatusPayload;
 import eu.rekawek.toxiproxy.Proxy;
 import eu.rekawek.toxiproxy.ToxiproxyClient;
 import eu.rekawek.toxiproxy.model.ToxicDirection;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
@@ -29,9 +29,9 @@ import java.util.concurrent.TimeUnit;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class GithubResourceTest_IT {
 
@@ -44,7 +44,7 @@ public class GithubResourceTest_IT {
     private static final Integer PORT = 5000;
     private static final Integer PORT_WIREMOCK = 9999;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws IOException {
         final WireMockConfiguration options = loadWireMockConfiguration();
         wireMockServer = new WireMockServer( options );
@@ -56,7 +56,7 @@ public class GithubResourceTest_IT {
         httpProxy.toxics().latency("latency-toxic", ToxicDirection.DOWNSTREAM, 5_000);
     }
 
-    @AfterClass
+    @AfterAll
     public static void setDown() throws IOException {
         wireMockServer.shutdown();
         httpProxy.delete();

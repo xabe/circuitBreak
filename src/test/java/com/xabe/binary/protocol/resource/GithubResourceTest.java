@@ -4,24 +4,20 @@ import com.xabe.binary.protocol.model.GithubUser;
 import com.xabe.binary.protocol.payload.GithubUserPayload;
 import com.xabe.binary.protocol.payload.StatusPayload;
 import com.xabe.binary.protocol.service.GithubService;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.WebApplicationException;
 import java.util.Optional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class GithubResourceTest {
-
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldReturnStatusPayload() throws Exception {
@@ -62,11 +58,10 @@ public class GithubResourceTest {
         final GithubResource resource = new GithubResource(service);
 
         when(service.getUser(any())).thenReturn(Optional.empty());
-        exception.expect(WebApplicationException.class);
 
 
         //When
-        resource.getUser("user");
+        Assertions.assertThrows(WebApplicationException.class, ()-> resource.getUser("user"));
 
     }
 }

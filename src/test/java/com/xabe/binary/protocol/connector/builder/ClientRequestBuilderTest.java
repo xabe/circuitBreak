@@ -1,11 +1,11 @@
 package com.xabe.binary.protocol.connector.builder;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
 
 public class ClientRequestBuilderTest {
 

@@ -1,12 +1,12 @@
 package com.xabe.binary.protocol.model;
 
 import com.xabe.binary.protocol.AbstractPojoTest;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 public class GithubUserTest extends AbstractPojoTest<GithubUser> {
 
     @Override
-    @Before
+    @BeforeEach
     public void beforeTests() {
         this.pojo = new GithubUser("OK","OK","OK");
         this.otherPojo = new GithubUser("KO","KO","KO");

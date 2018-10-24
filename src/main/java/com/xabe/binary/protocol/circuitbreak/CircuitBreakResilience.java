@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.Properties;
 import java.util.function.Supplier;
 
-public class CircuitBreakResilience implements WrapperCircuitBreaker {
+public class CircuitBreakResilience implements WrapperCircuitBreaker<Object> {
     public static final String ATTEMPTS = "attempts";
     public static final String SLICE = "slice";
     public static final String DEFAULT_VALUE = "1";
@@ -35,7 +35,7 @@ public class CircuitBreakResilience implements WrapperCircuitBreaker {
 
 
     @Override
-    public <T> T callWithCircuitBreaker(Supplier<T> call) {
+    public Object callWithCircuitBreaker(Supplier<Object> call) {
         return CircuitBreaker.decorateSupplier(circuitBreaker,call::get).get();
     }
 }

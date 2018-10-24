@@ -37,7 +37,7 @@ public class RestConnectorImpl implements RestConnector {
     }
 
     @Override
-    public <T> Optional<T> getSimpleObject(ClientRequestInfo clientRequestInfo) {
+    public Optional<Object> getSimpleObject(ClientRequestInfo clientRequestInfo) {
         return Optional.ofNullable(circuitBreaker.callWithCircuitBreaker(this.call(clientRequestInfo)));
     }
 

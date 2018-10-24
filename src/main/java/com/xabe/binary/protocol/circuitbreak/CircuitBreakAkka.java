@@ -11,7 +11,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-public class CircuitBreakAkka implements WrapperCircuitBreaker {
+public class CircuitBreakAkka implements WrapperCircuitBreaker<Object> {
 
     public static final String CLOSE_CIRCUIT_BREAK = "-----> CLOSE CIRCUIT BREAK";
     public static final String HALF_OPEN_CIRCUIT_BREAK = "-----> HALF OPEN CIRCUIT BREAK";
@@ -51,7 +51,7 @@ public class CircuitBreakAkka implements WrapperCircuitBreaker {
     }
 
     @Override
-    public <T> T callWithCircuitBreaker(Supplier<T> call) {
+    public Object callWithCircuitBreaker(Supplier<Object> call) {
         return circuitBreaker.callWithSyncCircuitBreaker(call::get);
     }
 }
