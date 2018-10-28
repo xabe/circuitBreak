@@ -5,10 +5,9 @@ import akka.pattern.CircuitBreaker;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.concurrent.duration.FiniteDuration;
 
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public class CircuitBreakAkka implements WrapperCircuitBreaker<Object> {
@@ -31,11 +30,11 @@ public class CircuitBreakAkka implements WrapperCircuitBreaker<Object> {
                 actorSystem.dispatcher(),
                 actorSystem.scheduler(),
                 NumberUtils.toInt(properties.getProperty(ATTEMPTS, DEFAULT_VALUE_ATTEMPTS)),
-                FiniteDuration.create(NumberUtils.toInt(properties.getProperty(TIMEOUT, DEFAULT_VALUE_TIMEOUT)), TimeUnit.SECONDS),
-                FiniteDuration.create(NumberUtils.toInt(properties.getProperty(SLICE, DEFAULT_VALUE_SLICE)), TimeUnit.SECONDS))
+                Duration.ofSeconds(NumberUtils.toLong(properties.getProperty(TIMEOUT, DEFAULT_VALUE_TIMEOUT))),
+                Duration.ofSeconds(NumberUtils.toLong(properties.getProperty(SLICE, DEFAULT_VALUE_SLICE))))
                 .onOpen(this::open)
                 .onHalfOpen(this::halfOpen)
-                .onClose(this::close);
+                .onClose(this::close);;
     }
 
     void close() {
