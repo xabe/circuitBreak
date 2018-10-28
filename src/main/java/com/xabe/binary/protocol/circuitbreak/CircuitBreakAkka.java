@@ -34,7 +34,7 @@ public class CircuitBreakAkka implements WrapperCircuitBreaker<Object> {
                 Duration.ofSeconds(NumberUtils.toLong(properties.getProperty(SLICE, DEFAULT_VALUE_SLICE))))
                 .onOpen(this::open)
                 .onHalfOpen(this::halfOpen)
-                .onClose(this::close);;
+                .onClose(this::close);
     }
 
     void close() {

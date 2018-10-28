@@ -35,9 +35,12 @@
         <skipTests>false</skipTests>
         <surefire.version>2.22.1</surefire.version>
         <surefire.argline>-Xmx512m</surefire.argline>
-        <jacoco.argline>
-            -javaagent:${settings.localRepository}${file.separator}org${file.separator}jacoco${file.separator}org.jacoco.agent${file.separator}${jacoco.version}${file.separator}org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}${file.separator}coverage-reports${file.separator}jacoco-ut.exec
-        </jacoco.argline>
+        <jacoco.argline.ut>
+            --illegal-access=permit --enable-preview -javaagent:${settings.localRepository}${file.separator}org${file.separator}jacoco${file.separator}org.jacoco.agent${file.separator}${jacoco.version}${file.separator}org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}${file.separator}coverage-reports${file.separator}jacoco-ut.exec
+        </jacoco.argline.ut>
+        <jacoco.argline.it>
+            --illegal-access=permit --enable-preview -javaagent:${settings.localRepository}${file.separator}org${file.separator}jacoco${file.separator}org.jacoco.agent${file.separator}${jacoco.version}${file.separator}org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}${file.separator}coverage-reports${file.separator}jacoco-it.exec
+        </jacoco.argline.it>
         <skipIntegrationTests>false</skipIntegrationTests>
         <junit.jupiter.api.version>5.3.1</junit.jupiter.api.version>
         <mockito.version>2.23.0</mockito.version>
@@ -220,13 +223,7 @@
             <version>3.4.2</version>
         </dependency>
 
-        <!-- java 9 and 11
-
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.0</version>
-        </dependency> -->
+        <!-- java 9 and 11 -->
 
         <dependency>
             <groupId>javax.activation</groupId>
@@ -464,7 +461,7 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>
-                        --illegal-access=permit
+                        ${jacoco.argline.ut}
                     </argLine>
                     <systemPropertyVariables>
                         <app.log.path>${tmp.dir}</app.log.path>
@@ -488,7 +485,7 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>
-                        --illegal-access=permit
+                        ${jacoco.argline.it}
                     </argLine>
                     <systemPropertyVariables>
                         <app.log.path>${tmp.dir}</app.log.path>
