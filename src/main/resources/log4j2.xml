@@ -32,13 +32,14 @@
         <RollingRandomAccessFile append="true" name="IDEsTrace"
                                  fileName="${LOGPATH}/APP_Trace.${APP}.${HOST}.log"
                                  filePattern="${LOGPATH}/APP_Trace.${APP}.${HOST}.log.%d{yyyy-MM-dd-HH}">
-            <PatternLayout>
-                <Pattern>${OUTPUTPATTERN}</Pattern>
-            </PatternLayout>
+            <JSONLayout complete="false" compact="false" eventEol="true">
+            </JSONLayout>>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
         </RollingRandomAccessFile>
+
+
 
     </Appenders>
 

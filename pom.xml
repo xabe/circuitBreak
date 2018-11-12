@@ -188,39 +188,52 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-1.2-api</artifactId>
             <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
             <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.4.2</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- java 9 and 11 -->
@@ -272,8 +285,6 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>2.4.0-b180830.0438</version>
         </dependency>
-
-
 
         <!-- CircuitBreak -->
 
@@ -461,11 +472,17 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>
-                        ${jacoco.argline.ut}
+                        ${surefire.argline} ${jacoco.argline.ut}
                     </argLine>
                     <systemPropertyVariables>
-                        <app.log.path>${tmp.dir}</app.log.path>
+                        <org.slf4j.simpleLogger.defaultLogLevel>DEBUG</org.slf4j.simpleLogger.defaultLogLevel>
+                        <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
+                        <org.slf4j.simpleLogger.dateTimeFormat>yyyy-MM-dd HH:mm:ss:SSS Z</org.slf4j.simpleLogger.dateTimeFormat>
+                        <org.slf4j.simpleLogger.showThreadName>true</org.slf4j.simpleLogger.showThreadName>
                     </systemPropertyVariables>
+                    <classpathDependencyExcludes>
+                        <classpathDependencyExcludes>org.apache.logging.log4j:log4j-slf4j-impl</classpathDependencyExcludes>
+                    </classpathDependencyExcludes>
                     <skipTests>${skipTests}</skipTests>
                     <forkCount>1</forkCount>
                     <workingDirectory>${basedir}/target</workingDirectory>
@@ -485,12 +502,17 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>
-                        ${jacoco.argline.it}
+                        ${surefire.argline} ${jacoco.argline.it}
                     </argLine>
                     <systemPropertyVariables>
-                        <app.log.path>${tmp.dir}</app.log.path>
-                        <app.log.name>circuitBreakTest</app.log.name>
+                        <org.slf4j.simpleLogger.defaultLogLevel>DEBUG</org.slf4j.simpleLogger.defaultLogLevel>
+                        <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
+                        <org.slf4j.simpleLogger.dateTimeFormat>yyyy-MM-dd HH:mm:ss:SSS Z</org.slf4j.simpleLogger.dateTimeFormat>
+                        <org.slf4j.simpleLogger.showThreadName>true</org.slf4j.simpleLogger.showThreadName>
                     </systemPropertyVariables>
+                    <classpathDependencyExcludes>
+                        <classpathDependencyExcludes>org.apache.logging.log4j:log4j-slf4j-impl</classpathDependencyExcludes>
+                    </classpathDependencyExcludes>
                     <skipTests>${skipIntegrationTests}</skipTests>
                     <forkCount>1</forkCount>
                     <workingDirectory>${basedir}/target</workingDirectory>
@@ -662,6 +684,7 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <excludeScope>test</excludeScope>
                             <includeScope>compile</includeScope>
+                            <includeScope>runtime</includeScope>
                         </configuration>
                     </execution>
                 </executions>
@@ -693,6 +716,9 @@
                                 <argument>--illegal-access=permit</argument>
                                 <argument>-Dspring.profiles.active=test</argument>
                                 <argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001</argument>
+                                <argument>-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector</argument>
+                                <argument>-DAsyncLogger.RingBufferSize=128</argument>
+                                <argument>-Dorg.apache.logging.log4j.simplelog.StatusLogger.level=DEBUG</argument>
                                 <argument>-Dorg.jboss.logging.provider=slf4j</argument>
                                 <argument>-Dlog4j.configurationFile=file://${app.config.dir}${file.separator}log4j2.xml</argument>
                                 <argument>-Dapp.log.path=${tmp.dir}</argument>

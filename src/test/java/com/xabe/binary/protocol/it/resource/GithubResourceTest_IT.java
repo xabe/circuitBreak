@@ -25,6 +25,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -100,7 +101,7 @@ public class GithubResourceTest_IT {
         final WebTarget target = client.target( "http://localhost:8008"  ).path( "/v1" ).path( "/user/xabe" );
 
         //When
-        final LocalDateTime start = LocalDateTime.now();
+        final LocalTime start = LocalTime.now();
         final Response response = client.target(target.getUri())
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON + "; charset=" + StandardCharsets.UTF_8.name())
@@ -108,7 +109,7 @@ public class GithubResourceTest_IT {
 
         //Then
         final GithubUser githubUser = response.readEntity(GithubUser.class);
-        final LocalDateTime end = LocalDateTime.now();
+        final LocalTime end = LocalTime.now();
         System.out.println(String.format("Durantion %d seconds",Duration.between(start, end).getSeconds()));
         assertThat(githubUser, is(notNullValue()));
         assertThat(githubUser.getLogin(), is("CB"));
@@ -123,7 +124,7 @@ public class GithubResourceTest_IT {
         final WebTarget target = client.target( "http://localhost:8008"  ).path( "/v1" ).path( "/user/xabe" );
 
         //When
-        final LocalDateTime start = LocalDateTime.now();
+        final LocalTime start = LocalTime.now();
         final Response response = client.target(target.getUri())
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON + "; charset=" + StandardCharsets.UTF_8.name())
@@ -131,7 +132,7 @@ public class GithubResourceTest_IT {
 
         //Then
         final GithubUser githubUser = response.readEntity(GithubUser.class);
-        final LocalDateTime end = LocalDateTime.now();
+        final LocalTime end = LocalTime.now();
         System.out.println(String.format("Durantion %d seconds",Duration.between(start, end).getSeconds()));
         assertThat(githubUser, is(notNullValue()));
         assertThat(githubUser.getLogin(), is("CB"));
