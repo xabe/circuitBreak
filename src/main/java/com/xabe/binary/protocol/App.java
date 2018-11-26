@@ -39,5 +39,5 @@ public class App {
     private static String getUriInfo(String protocol,int port) {
         return String.format("%s://%s:%d",protocol, BIND_IP, port);
     }
-    
+
 }

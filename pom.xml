@@ -494,7 +494,7 @@
                         ${surefire.argline} ${jacoco.argline.it}
                     </argLine>
                     <systemPropertyVariables>
-                        <org.slf4j.simpleLogger.defaultLogLevel>DEBUG</org.slf4j.simpleLogger.defaultLogLevel>
+                        <org.slf4j.simpleLogger.defaultLogLevel>INFO</org.slf4j.simpleLogger.defaultLogLevel>
                         <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
                         <org.slf4j.simpleLogger.dateTimeFormat>yyyy-MM-dd HH:mm:ss:SSS Z
                         </org.slf4j.simpleLogger.dateTimeFormat>
