@@ -51,6 +51,6 @@ public class CircuitBreakAkka implements WrapperCircuitBreaker<Object> {
 
     @Override
     public Object callWithCircuitBreaker(Supplier<Object> call) {
-        return circuitBreaker.callWithSyncCircuitBreaker(call::get);
+        return circuitBreaker.callWithSyncCircuitBreaker(() -> call.get());
     }
 }

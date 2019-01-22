@@ -36,6 +36,6 @@ public class CircuitBreakResilience implements WrapperCircuitBreaker<Object> {
 
     @Override
     public Object callWithCircuitBreaker(Supplier<Object> call) {
-        return CircuitBreaker.decorateSupplier(circuitBreaker,call::get).get();
+        return CircuitBreaker.decorateSupplier(circuitBreaker,call).get();
     }
 }
