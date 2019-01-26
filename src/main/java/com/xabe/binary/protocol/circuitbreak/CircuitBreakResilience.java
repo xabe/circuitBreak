@@ -2,7 +2,6 @@ package com.xabe.binary.protocol.circuitbreak;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +27,7 @@ public class CircuitBreakResilience implements WrapperCircuitBreaker<Object> {
                 .enableAutomaticTransitionFromOpenToHalfOpen()
                 .waitDurationInOpenState(Duration.ofSeconds(NumberUtils.toLong(properties.getProperty(SLICE, DEFAULT_VALUE_SLICE))))
                 .build();
-        CircuitBreakerRegistry registry = CircuitBreakerRegistry.of(config);
-        this.circuitBreaker = registry.circuitBreaker("my-circuit-break");
+        this.circuitBreaker = CircuitBreaker.of("my-circuit-break",config);
         circuitBreaker.getEventPublisher().onEvent(event -> logger.info(event.toString()));
     }
 
